@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# bar stands for build and run
+
+cmake -S . -B build
+cmake --build build
+./build/shoots
