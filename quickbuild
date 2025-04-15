@@ -1,0 +1,51 @@
+cc = "gcc";
+
+cflagsdev = "-std=c99 -Iinclude -Wall -fsanitize=address  $(pkg-config --cflags raylib)";
+lflagsdev = "-fsanitize=address $(pkg-config --libs raylib)";
+
+cflagsrel = "-std=c99 -Iinclude -O3 $(pkg-config --cflags raylib)";
+lflagsrel = "-O3 $(pkg-config --libs raylib)";
+
+srcs = "src/*.c";
+headers = "include/*.h";
+
+objsdev = srcs: "src/*.c" -> "build/obj/dev/*.o";
+objsrel = srcs: "src/*.c" -> "build/obj/rel/*.o";
+bin = "build/shoots";
+
+"builddev" {
+    depends = "mkdirs", objsdev, headers;
+    run = "[cc] [lflagsdev] [objsdev] -o [bin]";
+}
+
+objsdev as obj {
+    obj_source = obj: "build/obj/dev/*.o" -> "src/*.c";
+    depends = obj_source, headers;
+    run = "[cc] [cflagsdev] -c [obj_source] -o [obj]";
+}
+
+"mkdirs" {
+    run = "mkdir -p build/obj/dev",
+        "mkdir -p build/obj/rel";
+}
+
+"run" {
+    depends = "quickbuild";
+    run = "[bin]";
+}
+
+"clean" {
+    run = "rm -rf build";
+}
+
+# ---------------------------RELEASE BUILD-------------------------------------
+"buildrel" {
+    depends = "clean", "mkdirs", objsrel, headers;
+    run = "[cc] [lflagsrel] [objsrel] -o [bin]";
+}
+
+objsrel as obj {
+    obj_source = obj: "build/obj/rel/*.o" -> "src/*.c";
+    depends = obj_source, headers;
+    run = "[cc] [cflagsrel] -c [obj_source] -o [obj]";
+}
