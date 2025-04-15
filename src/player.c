@@ -1,5 +1,4 @@
 #include "player.h"
-#include "utils.h"
 #include "globals.h"
 #include <raylib.h>
 #include <raymath.h>
@@ -36,7 +35,7 @@ void sPlayer_Update(sPlayer *p, float dt)
     p->pos = Vector2Add(p->pos, Vector2Scale(pdata->vel, dt));
 
     if (inpDir.x != 0)
-    pdata->lookDir = inpDir.x > 0 ? 1 : 0;
+        pdata->lookDir = inpDir.x > 0 ? 1 : 0;
     pdata->vel = Vector2Scale(pdata->vel, SHOOTS_FRICTION);
 }
 
