@@ -2,6 +2,7 @@
 #define SHOOTS_PLAYER_H
 
 #include "entity.h"
+#include "globals.h"
 #include <raylib.h>
 #include <stdint.h>
 
@@ -10,6 +11,7 @@ typedef sEntity sPlayer;
 typedef struct
 {
     Vector2 vel;
+    uint8_t lookDir : 1; // 0 = left, 1 = right
 } sPlayerData;
 
 sPlayer *sPlayer_Init(Texture2D *tex);

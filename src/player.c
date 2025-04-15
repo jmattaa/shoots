@@ -1,4 +1,5 @@
 #include "player.h"
+#include "utils.h"
 #include "globals.h"
 #include <raylib.h>
 #include <raymath.h>
@@ -32,15 +33,21 @@ void sPlayer_Update(sPlayer *p, float dt)
         pdata->vel =
             Vector2Scale(Vector2Normalize(pdata->vel), SPLAYER_MAX_SPEED);
 
-    pdata->vel = Vector2Add(pdata->vel, inpDir);
-
     p->pos = Vector2Add(p->pos, Vector2Scale(pdata->vel, dt));
 
+    if (inpDir.x != 0)
+    pdata->lookDir = inpDir.x > 0 ? 1 : 0;
     pdata->vel = Vector2Scale(pdata->vel, SHOOTS_FRICTION);
 }
 
 void sPlayer_Draw(sPlayer *p)
 {
-    sEntity_Draw(p, SPLAYER_SPRITESHEET_LEFT_SRC,
+    sPlayerData *pdata = (sPlayerData *)p->data;
+#define SPRITE_SRC                                                             \
+    pdata->lookDir > 0 ? SPLAYER_SPRITESHEET_RIGHT_SRC                         \
+                       : SPLAYER_SPRITESHEET_LEFT_SRC
+
+    sEntity_Draw(p, SPRITE_SRC,
                  (Rectangle){p->pos.x, p->pos.y, p->size.x, p->size.y});
+#undef SPRITE_SRC
 }
