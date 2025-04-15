@@ -16,7 +16,7 @@ int main(int argc, char **argv)
         &background);
 
     // sEntity_Free will unload the texture
-    Texture2D playerTex = LoadTexture("res/player.png");
+    Texture2D playerTex = LoadTexture("res/playerIdle.png");
     sPlayer *p = sPlayer_Init(&playerTex);
 
     Camera2D cam = {
@@ -48,8 +48,8 @@ int main(int argc, char **argv)
 
         sPlayer_Update(p, dt);
 
-        sEntity_Draw(bg);
-        sEntity_Draw(p);
+        sEntity_DrawFull(bg);
+        sPlayer_Draw(p);
 
         EndMode2D();
         EndDrawing();

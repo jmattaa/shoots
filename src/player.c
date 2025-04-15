@@ -38,3 +38,9 @@ void sPlayer_Update(sPlayer *p, float dt)
 
     pdata->vel = Vector2Scale(pdata->vel, SHOOTS_FRICTION);
 }
+
+void sPlayer_Draw(sPlayer *p)
+{
+    sEntity_Draw(p, SPLAYER_SPRITESHEET_LEFT_SRC,
+                 (Rectangle){p->pos.x, p->pos.y, p->size.x, p->size.y});
+}
