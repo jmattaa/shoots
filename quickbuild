@@ -38,6 +38,11 @@ objsdev as obj {
     run = "rm -rf build";
 }
 
+"gen_compile_commands" {
+    depends = "clean";
+    run = "bear -- quickbuild";
+}
+
 # ---------------------------RELEASE BUILD-------------------------------------
 "buildrel" {
     depends = "clean", "mkdirs", objsrel, headers;
