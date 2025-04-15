@@ -2,6 +2,6 @@
 
 # bar stands for build and run
 
-cmake -S . -B build
-cmake --build build
+cmake -S . -B build && \
+cmake --build build && \
 ./build/shoots
