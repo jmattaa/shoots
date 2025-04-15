@@ -5,16 +5,23 @@
 
 int main(int argc, char **argv)
 {
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(SHOOTS_SCREEN_WIDTH, SHOOTS_SCREEN_HEIGHT, "Shoots");
     SetTargetFPS(60);
+    SetExitKey(0); // so esc doesn't quit
 
     sPlayer *p = sPlayer_Init(NULL);
 
     float dt;
     while (!WindowShouldClose())
     {
-        dt = GetFrameTime();
+        if (IsWindowResized())
+        {
+            SHOOTS_SCREEN_WIDTH = GetScreenWidth();
+            SHOOTS_SCREEN_HEIGHT = GetScreenHeight();
+        }
 
+        dt = GetFrameTime();
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
