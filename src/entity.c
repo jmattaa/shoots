@@ -2,7 +2,7 @@
 #include <raylib.h>
 #include <stdlib.h>
 
-sEntity *sEntity_Init(Vector2 pos, Vector2 size, Texture2D *tex, void *data)
+sEntity *sEntity_Init(Vector2 pos, Vector2 size, Texture *tex, void *data)
 {
     sEntity *e = malloc(sizeof(sEntity));
     e->pos = pos;
@@ -18,8 +18,7 @@ void sEntity_Draw(sEntity *e)
                    : DrawRectangleV(e->pos, e->size, BLACK);
 }
 
-void sEntity_Free(sEntity *e)
-{
+void sEntity_Free(sEntity *e) {
     if (e->tex != NULL)
         UnloadTexture(*e->tex);
     if (e->data != NULL)

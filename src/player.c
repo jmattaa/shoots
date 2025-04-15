@@ -1,6 +1,6 @@
 #include "player.h"
 #include "globals.h"
-#include "utils.h"
+#include <raylib.h>
 #include <raymath.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -35,9 +35,6 @@ void sPlayer_Update(sPlayer *p, float dt)
     pdata->vel = Vector2Add(pdata->vel, inpDir);
 
     p->pos = Vector2Add(p->pos, Vector2Scale(pdata->vel, dt));
-
-    p->pos.x = SCLAMP(p->pos.x, 0, SHOOTS_SCREEN_WIDTH - p->size.x);
-    p->pos.y = SCLAMP(p->pos.y, 0, SHOOTS_SCREEN_HEIGHT - p->size.y);
 
     pdata->vel = Vector2Scale(pdata->vel, SHOOTS_FRICTION);
 }
