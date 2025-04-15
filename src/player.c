@@ -9,6 +9,8 @@ sPlayer *sPlayer_Init(Texture2D *tex)
 {
     sPlayerData *pdata = malloc(sizeof(sPlayerData));
     pdata->vel = Vector2Zero();
+    pdata->animFrame = 0;
+    pdata->currentAnim = SPLAYER_ANIM_IDLE;
 
     sPlayer *p = sEntity_Init(
         (Vector2){SHOOTS_SCREEN_WIDTH / 2.0f, SHOOTS_SCREEN_HEIGHT / 2.0f},
@@ -39,14 +41,22 @@ void sPlayer_Update(sPlayer *p, float dt)
     pdata->vel = Vector2Scale(pdata->vel, SHOOTS_FRICTION);
 }
 
-void sPlayer_Draw(sPlayer *p)
+void sPlayer_Draw(sPlayer *p, int *fc)
 {
     sPlayerData *pdata = (sPlayerData *)p->data;
-#define SPRITE_SRC                                                             \
-    pdata->lookDir > 0 ? SPLAYER_SPRITESHEET_RIGHT_SRC                         \
-                       : SPLAYER_SPRITESHEET_LEFT_SRC
+    Rectangle spriteSrc = pdata->lookDir > 0 ? SPLAYER_SPRITESHEET_RIGHT_SRC
+                                             : SPLAYER_SPRITESHEET_LEFT_SRC;
 
-    sEntity_Draw(p, SPRITE_SRC,
+    if (*fc % SPLAYER_ANIM_SPEED == 0)
+    {
+        *fc = 0;
+        pdata->animFrame =
+            (pdata->animFrame + 1) % SPLAYER_ANIM_FC[pdata->currentAnim];
+    }
+
+    spriteSrc.x += pdata->animFrame * SPLAYER_SIZE;
+
+    sEntity_Draw(p, spriteSrc,
                  (Rectangle){p->pos.x, p->pos.y, p->size.x, p->size.y});
 #undef SPRITE_SRC
 }

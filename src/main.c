@@ -28,10 +28,13 @@ int main(int argc, char **argv)
     };
 
     SetTargetFPS(60);
+    int framesCount = 0;
 
     float dt;
     while (!WindowShouldClose())
     {
+        framesCount++;
+
         if (IsWindowResized())
         {
             SHOOTS_SCREEN_WIDTH = GetScreenWidth();
@@ -51,7 +54,7 @@ int main(int argc, char **argv)
         sPlayer_Update(p, dt);
 
         sEntity_DrawFull(bg);
-        sPlayer_Draw(p);
+        sPlayer_Draw(p, &framesCount);
 
         EndMode2D();
         EndDrawing();
