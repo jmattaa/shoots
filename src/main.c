@@ -36,6 +36,8 @@ int main(int argc, char **argv)
         {
             SHOOTS_SCREEN_WIDTH = GetScreenWidth();
             SHOOTS_SCREEN_HEIGHT = GetScreenHeight();
+            cam.offset = (Vector2){SHOOTS_SCREEN_WIDTH / 2.0f,
+                                   SHOOTS_SCREEN_HEIGHT / 2.0f};
         }
 
         dt = GetFrameTime();
