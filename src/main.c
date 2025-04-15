@@ -13,7 +13,7 @@ int main(int argc, char **argv)
     sEntity *bg = sEntity_Init(
         (Vector2){SHOOTS_SCREEN_WIDTH / 2.0f, SHOOTS_SCREEN_HEIGHT / 2.0f},
         (Vector2){SHOOTS_SCREEN_WIDTH, SHOOTS_SCREEN_HEIGHT}, &background,
-        &background);
+        NULL);
 
     // sEntity_Free will unload the texture
     Texture2D playerTex = LoadTexture("res/playerIdle.png");
@@ -56,6 +56,7 @@ int main(int argc, char **argv)
     }
 
     sEntity_Free(p);
+    sEntity_Free(bg);
 
     CloseWindow();
 

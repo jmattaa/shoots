@@ -30,7 +30,7 @@ objsdev as obj {
 }
 
 "run" {
-    depends = "quickbuild";
+    depends = "builddev";
     run = "[bin]";
 }
 
