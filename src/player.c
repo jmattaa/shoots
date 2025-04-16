@@ -34,8 +34,7 @@ void sPlayer_Update(sPlayer *p, float dt)
         pdata->vel =
             Vector2Scale(Vector2Normalize(pdata->vel), SPLAYER_MAX_SPEED);
 
-    if (inpDir.x != 0)
-        pdata->lookDir = inpDir.x > 0 ? 1 : 0;
+    pdata->lookDir = Vector2Normalize(inpDir);
 
     if (Vector2Length(inpDir) > 0)
         pdata->currentAnim = SPLAYER_ANIM_RUN;
@@ -46,23 +45,26 @@ void sPlayer_Update(sPlayer *p, float dt)
     pdata->vel = Vector2Scale(pdata->vel, SHOOTS_FRICTION);
 }
 
+static const Rectangle spriteTable[2][3] = {
+    // IDLE animation
+    {
+        SPLAYER_SPRITESHEET_UP_SRC,   // Looking up
+        SPLAYER_SPRITESHEET_LEFT_SRC, // Looking left
+        SPLAYER_SPRITESHEET_RIGHT_SRC // Looking right
+    },
+    // RUN animation
+    {
+        SPLAYER_SPRITESHEET_UP_RUN1_SRC,   // Looking up
+        SPLAYER_SPRITESHEET_LEFT_RUN1_SRC, // Looking left
+        SPLAYER_SPRITESHEET_RIGHT_RUN1_SRC // Looking right
+    }};
+
 void sPlayer_Draw(sPlayer *p, int *fc)
 {
     sPlayerData *pdata = (sPlayerData *)p->data;
 
-    Rectangle spriteSrc = (Rectangle){0, 0, SPLAYER_SIZE, SPLAYER_SIZE};
-
-    switch (pdata->currentAnim)
-    {
-    case SPLAYER_ANIM_IDLE:
-        spriteSrc = pdata->lookDir > 0 ? SPLAYER_SPRITESHEET_RIGHT_SRC
-                                       : SPLAYER_SPRITESHEET_LEFT_SRC;
-        break;
-    case SPLAYER_ANIM_RUN:
-        spriteSrc = pdata->lookDir > 0 ? SPLAYER_SPRITESHEET_RIGHT_RUN1_SRC
-                                       : SPLAYER_SPRITESHEET_LEFT_RUN1_SRC;
-        break;
-    }
+    int dirIdx = (pdata->lookDir.y < 0) ? 0 : (pdata->lookDir.x <= 0) ? 1 : 2;
+    Rectangle spriteSrc = spriteTable[pdata->currentAnim][dirIdx];
 
     if (*fc % sPlayerAnims[pdata->currentAnim].speed == 0)
     {
