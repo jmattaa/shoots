@@ -11,10 +11,18 @@ typedef sEntity sPlayer;
 typedef enum
 {
     SPLAYER_ANIM_IDLE,
+    SPLAYER_ANIM_RUN
 } sPlayer_AnimType;
 
-static const uint8_t SPLAYER_ANIM_FC[] = {
-    4, // SPLAYER_ANIM_IDLE
+typedef struct
+{
+    uint8_t fc;
+    uint8_t speed; // higher -> slower
+} sPlayerAnimInfo;
+
+static const sPlayerAnimInfo sPlayerAnims[] = {
+    [SPLAYER_ANIM_IDLE] = {2, 40},
+    [SPLAYER_ANIM_RUN] = {6, SPLAYER_ACCEL / 15},
 };
 
 typedef struct
@@ -35,4 +43,10 @@ void sPlayer_Draw(sPlayer *p, int *fc);
     (Rectangle) { 0, 0, TS, TS }
 #define SPLAYER_SPRITESHEET_RIGHT_SRC                                          \
     (Rectangle) { 0, TS, TS, TS }
+
+#define SPLAYER_SPRITESHEET_LEFT_RUN1_SRC                                      \
+    (Rectangle) { TS *sPlayerAnims[SPLAYER_ANIM_IDLE].fc, 0, TS, TS }
+#define SPLAYER_SPRITESHEET_RIGHT_RUN1_SRC                                     \
+    (Rectangle) { TS *sPlayerAnims[SPLAYER_ANIM_IDLE].fc, TS, TS, TS }
+
 #endif

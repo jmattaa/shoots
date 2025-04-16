@@ -14,6 +14,4 @@ extern int SHOOTS_SCREEN_HEIGHT;
 #define SPLAYER_MAX_SPEED SPLAYER_ACCEL * 3
 #define SPLAYER_SIZE SHOOTS_TILE_SIZE
 
-#define SPLAYER_ANIM_SPEED 10 // the higher -> the slower
-
 #endif

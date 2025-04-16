@@ -16,7 +16,7 @@ int main(int argc, char **argv)
         NULL);
 
     // sEntity_Free will unload the texture
-    Texture2D playerTex = LoadTexture("res/playerIdle.png");
+    Texture2D playerTex = LoadTexture("res/playerSheet.png");
     sPlayer *p = sPlayer_Init(&playerTex);
 
     Camera2D cam = {
@@ -47,7 +47,7 @@ int main(int argc, char **argv)
 
         BeginDrawing();
         BeginMode2D(cam);
-        ClearBackground(BLACK);
+        ClearBackground(RAYWHITE);
 
         cam.target = (Vector2){p->pos.x, p->pos.y};
 
