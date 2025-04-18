@@ -26,7 +26,8 @@ objsdev as obj {
 
 "mkdirs" {
     run = "mkdir -p build/obj/dev",
-        "mkdir -p build/obj/rel";
+        "mkdir -p build/obj/rel",
+        "cp -r res build/";
 }
 
 "run" {
