@@ -45,25 +45,32 @@ void sPlayer_Update(sPlayer *p, float dt)
     pdata->vel = Vector2Scale(pdata->vel, SHOOTS_FRICTION);
 }
 
-static const Rectangle spriteTable[2][3] = {
+static const Rectangle spriteTable[2][4] = {
     // IDLE animation
     {
-        SPLAYER_SPRITESHEET_UP_SRC,   // Looking up
-        SPLAYER_SPRITESHEET_LEFT_SRC, // Looking left
-        SPLAYER_SPRITESHEET_RIGHT_SRC // Looking right
+        SPLAYER_SPRITESHEET_DOWN_SRC, // down
+        SPLAYER_SPRITESHEET_UP_SRC,   // up
+        SPLAYER_SPRITESHEET_LEFT_SRC, // left
+        SPLAYER_SPRITESHEET_RIGHT_SRC // right
     },
     // RUN animation
     {
-        SPLAYER_SPRITESHEET_UP_RUN1_SRC,   // Looking up
-        SPLAYER_SPRITESHEET_LEFT_RUN1_SRC, // Looking left
-        SPLAYER_SPRITESHEET_RIGHT_RUN1_SRC // Looking right
+        SPLAYER_SPRITESHEET_DOWN_RUN1_SRC, // down
+        SPLAYER_SPRITESHEET_UP_RUN1_SRC,   // up
+        SPLAYER_SPRITESHEET_LEFT_RUN1_SRC, // left
+        SPLAYER_SPRITESHEET_RIGHT_RUN1_SRC // right
     }};
 
 void sPlayer_Draw(sPlayer *p, int *fc)
 {
     sPlayerData *pdata = (sPlayerData *)p->data;
 
-    int dirIdx = (pdata->lookDir.y < 0) ? 0 : (pdata->lookDir.x <= 0) ? 1 : 2;
+    int dirIdx = 0;
+    if (fabsf(pdata->lookDir.x) > fabsf(pdata->lookDir.y))
+        dirIdx = (pdata->lookDir.x < 0) ? 2 : 3;
+    else
+        dirIdx = (pdata->lookDir.y < 0) ? 1 : 0;
+
     Rectangle spriteSrc = spriteTable[pdata->currentAnim][dirIdx];
 
     if (*fc % sPlayerAnims[pdata->currentAnim].speed == 0)
