@@ -21,8 +21,8 @@ typedef struct
 } sPlayerAnimInfo;
 
 static const sPlayerAnimInfo sPlayerAnims[] = {
-    [SPLAYER_ANIM_IDLE] = {1, 0},
-    [SPLAYER_ANIM_RUN] = {6, SPLAYER_ACCEL / 15},
+    [SPLAYER_ANIM_IDLE] = {1, 1}, // speed cannot be 0 for some reason
+    [SPLAYER_ANIM_RUN] = {6, SPLAYER_ACCEL / 12},
 };
 
 typedef struct
@@ -41,18 +41,18 @@ void sPlayer_Draw(sPlayer *p, int *fc);
 
 #define SPLAYER_SPRITESHEET_DOWN_SRC                                           \
     (Rectangle) { 0, 0, TS, TS }
-#define SPLAYER_SPRITESHEET_LEFT_SRC                                           \
-    (Rectangle) { 0, TS, TS, TS }
 #define SPLAYER_SPRITESHEET_RIGHT_SRC                                          \
+    (Rectangle) { 0, TS, TS, TS }
+#define SPLAYER_SPRITESHEET_LEFT_SRC                                           \
     (Rectangle) { 0, TS * 2, TS, TS }
 #define SPLAYER_SPRITESHEET_UP_SRC                                             \
     (Rectangle) { 0, TS * 3, TS, TS }
 
 #define SPLAYER_SPRITESHEET_DOWN_RUN1_SRC                                      \
     (Rectangle) { TS *sPlayerAnims[SPLAYER_ANIM_IDLE].fc, 0, TS, TS }
-#define SPLAYER_SPRITESHEET_LEFT_RUN1_SRC                                      \
-    (Rectangle) { TS *sPlayerAnims[SPLAYER_ANIM_IDLE].fc, TS, TS, TS }
 #define SPLAYER_SPRITESHEET_RIGHT_RUN1_SRC                                     \
+    (Rectangle) { TS *sPlayerAnims[SPLAYER_ANIM_IDLE].fc, TS, TS, TS }
+#define SPLAYER_SPRITESHEET_LEFT_RUN1_SRC                                      \
     (Rectangle) { TS *sPlayerAnims[SPLAYER_ANIM_IDLE].fc, TS * 2, TS, TS }
 #define SPLAYER_SPRITESHEET_UP_RUN1_SRC                                        \
     (Rectangle) { TS *sPlayerAnims[SPLAYER_ANIM_IDLE].fc, TS * 3, TS, TS }

@@ -65,7 +65,7 @@ void sPlayer_Draw(sPlayer *p, int *fc)
 {
     sPlayerData *pdata = (sPlayerData *)p->data;
 
-    int dirIdx = 0;
+    int dirIdx = 3;
     if (fabsf(pdata->lookDir.x) > fabsf(pdata->lookDir.y))
         dirIdx = (pdata->lookDir.x < 0) ? 2 : 3;
     else
