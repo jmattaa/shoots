@@ -24,7 +24,7 @@ int main(int argc, char **argv)
         .offset =
             (Vector2){SHOOTS_SCREEN_WIDTH / 2.0f, SHOOTS_SCREEN_HEIGHT / 2.0f},
         .rotation = 0.0f,
-        .zoom = 2.0f, // 2x zoom so 16x16 will look like 32x32
+        .zoom = 4.0f, // 4x zoom
     };
 
     SetTargetFPS(60);

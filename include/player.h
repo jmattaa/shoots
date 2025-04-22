@@ -28,9 +28,9 @@ static const sPlayerAnimInfo sPlayerAnims[] = {
 typedef struct
 {
     Vector2 vel;
-    Vector2 lookDir;
     uint8_t animFrame;
     sPlayer_AnimType currentAnim;
+    int dirIdx;
 } sPlayerData;
 
 sPlayer *sPlayer_Init(Texture2D *tex);

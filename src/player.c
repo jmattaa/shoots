@@ -5,12 +5,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+typedef enum
+{
+    SPLAYER_DIR_UP = 0,
+    SPLAYER_DIR_LEFT = 1,
+    SPLAYER_DIR_RIGHT = 2
+} sPDirection;
+
+static const Rectangle spriteTable[2][3] = {
+    // IDLE animation
+    {
+        SPLAYER_SPRITESHEET_UP_SRC,   // up
+        SPLAYER_SPRITESHEET_LEFT_SRC, // left
+        SPLAYER_SPRITESHEET_RIGHT_SRC // right
+    },
+    // RUN animation
+    {
+        SPLAYER_SPRITESHEET_UP_RUN1_SRC,   // up
+        SPLAYER_SPRITESHEET_LEFT_RUN1_SRC, // left
+        SPLAYER_SPRITESHEET_RIGHT_RUN1_SRC // right
+    }};
+
 sPlayer *sPlayer_Init(Texture2D *tex)
 {
     sPlayerData *pdata = malloc(sizeof(sPlayerData));
     pdata->vel = Vector2Zero();
     pdata->animFrame = 0;
     pdata->currentAnim = SPLAYER_ANIM_IDLE;
+    pdata->dirIdx = SPLAYER_DIR_LEFT;
 
     sPlayer *p = sEntity_Init(
         (Vector2){SHOOTS_SCREEN_WIDTH / 2.0f, SHOOTS_SCREEN_HEIGHT / 2.0f},
@@ -34,10 +56,17 @@ void sPlayer_Update(sPlayer *p, float dt)
         pdata->vel =
             Vector2Scale(Vector2Normalize(pdata->vel), SPLAYER_MAX_SPEED);
 
-    pdata->lookDir = Vector2Normalize(inpDir);
-
     if (Vector2Length(inpDir) > 0)
+    {
+        pdata->dirIdx =
+            (fabsf(inpDir.x) > fabsf(inpDir.y))
+                ? ((inpDir.x < 0) ? SPLAYER_DIR_LEFT : SPLAYER_DIR_RIGHT)
+            : (inpDir.y < 0)                    ? SPLAYER_DIR_UP
+            : (pdata->dirIdx == SPLAYER_DIR_UP) ? SPLAYER_DIR_RIGHT
+                                                : pdata->dirIdx;
+
         pdata->currentAnim = SPLAYER_ANIM_RUN;
+    }
     else
         pdata->currentAnim = SPLAYER_ANIM_IDLE;
 
@@ -45,31 +74,11 @@ void sPlayer_Update(sPlayer *p, float dt)
     pdata->vel = Vector2Scale(pdata->vel, SHOOTS_FRICTION);
 }
 
-static const Rectangle spriteTable[2][3] = {
-    // IDLE animation
-    {
-        SPLAYER_SPRITESHEET_UP_SRC,   // up
-        SPLAYER_SPRITESHEET_LEFT_SRC, // left
-        SPLAYER_SPRITESHEET_RIGHT_SRC // right
-    },
-    // RUN animation
-    {
-        SPLAYER_SPRITESHEET_UP_RUN1_SRC,   // up
-        SPLAYER_SPRITESHEET_LEFT_RUN1_SRC, // left
-        SPLAYER_SPRITESHEET_RIGHT_RUN1_SRC // right
-    }};
-
 void sPlayer_Draw(sPlayer *p, int *fc)
 {
     sPlayerData *pdata = (sPlayerData *)p->data;
 
-    int dirIdx = 1;
-    if (fabsf(pdata->lookDir.x) > fabsf(pdata->lookDir.y))
-        dirIdx = (pdata->lookDir.x < 0) ? 1 : 2;
-    else
-        dirIdx = (pdata->lookDir.y < 0) ? 0 : 1;
-
-    Rectangle spriteSrc = spriteTable[pdata->currentAnim][dirIdx];
+    Rectangle spriteSrc = spriteTable[pdata->currentAnim][pdata->dirIdx];
 
     if (*fc % sPlayerAnims[pdata->currentAnim].speed == 0)
     {
