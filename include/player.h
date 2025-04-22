@@ -39,22 +39,18 @@ void sPlayer_Draw(sPlayer *p, int *fc);
 
 #define TS SHOOTS_TILE_SIZE
 
-#define SPLAYER_SPRITESHEET_DOWN_SRC                                           \
-    (Rectangle) { 0, 0, TS, TS }
 #define SPLAYER_SPRITESHEET_RIGHT_SRC                                          \
-    (Rectangle) { 0, TS, TS, TS }
+    (Rectangle) { 0, 0, TS, TS }
 #define SPLAYER_SPRITESHEET_LEFT_SRC                                           \
-    (Rectangle) { 0, TS * 2, TS, TS }
+    (Rectangle) { 0, TS, TS, TS }
 #define SPLAYER_SPRITESHEET_UP_SRC                                             \
-    (Rectangle) { 0, TS * 3, TS, TS }
+    (Rectangle) { 0, TS * 2, TS, TS }
 
-#define SPLAYER_SPRITESHEET_DOWN_RUN1_SRC                                      \
-    (Rectangle) { TS *sPlayerAnims[SPLAYER_ANIM_IDLE].fc, 0, TS, TS }
 #define SPLAYER_SPRITESHEET_RIGHT_RUN1_SRC                                     \
-    (Rectangle) { TS *sPlayerAnims[SPLAYER_ANIM_IDLE].fc, TS, TS, TS }
+    (Rectangle) { TS *sPlayerAnims[SPLAYER_ANIM_IDLE].fc, 0, TS, TS }
 #define SPLAYER_SPRITESHEET_LEFT_RUN1_SRC                                      \
-    (Rectangle) { TS *sPlayerAnims[SPLAYER_ANIM_IDLE].fc, TS * 2, TS, TS }
+    (Rectangle) { TS *sPlayerAnims[SPLAYER_ANIM_IDLE].fc, TS, TS, TS }
 #define SPLAYER_SPRITESHEET_UP_RUN1_SRC                                        \
-    (Rectangle) { TS *sPlayerAnims[SPLAYER_ANIM_IDLE].fc, TS * 3, TS, TS }
+    (Rectangle) { TS *sPlayerAnims[SPLAYER_ANIM_IDLE].fc, TS * 2, TS, TS }
 
 #endif
