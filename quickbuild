@@ -1,3 +1,4 @@
+# quickbuild 0.7.0-devbuild
 cc = "gcc";
 
 cflagsdev = "-std=c99 -Iinclude -Wall -fsanitize=address  $(pkg-config --cflags raylib)";
